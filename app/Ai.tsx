@@ -52,7 +52,7 @@ export const Ai = createAI({
               );
 
               const langflowResponse = await fetch(
-                "https://api.langflow.astra.datastax.com/lf/7436dcd2-a480-4009-bce2-43ba959692e5/api/v1/run/movies_plus_plus?stream=false",
+                process.env.LANGFLOW_URL!,
                 {
                   method: "POST",
                   headers: {
@@ -121,18 +121,18 @@ export const Ai = createAI({
                   <IntegrationSpinner /> Getting more info about {movieName}...
                 </div>
               );
-              const vector = await new OpenAI({
+           /*    const vector = await new OpenAI({
                 apiKey: process.env.OPENAI_API_KEY,
               }).embeddings
                 .create({
                   input: movieName,
                   model: "text-embedding-3-large",
-                })
-                .then((r) => r.data[0].embedding);
+                }) 
+                .then((r) => r.data[0].embedding); */
               const movie: any = await db
                 .collection("movies")
-                .findOne({}, { vector });
-
+                .findOne({}, { "$vectorize": movieName });
+              console.log(movie)
               yield (
                 <div className="flex items-center gap-4">
                   <IntegrationSpinner /> Found movie, getting trailer...
