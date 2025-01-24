@@ -20,7 +20,7 @@ with open(file_path) as user_file:
 
 client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
 database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
-collection = database.get_collection("movies")
+collection = database.get_collection("movies2")
 
 movies = json.loads(file_contents)
 #movies = movies[:100]
@@ -61,3 +61,4 @@ for movie in movies:
             continue
         break
   
+
